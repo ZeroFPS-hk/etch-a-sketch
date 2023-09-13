@@ -1,0 +1,14 @@
+.canvas{
+    display: flex;
+    flex-direction: column;
+}
+
+.rowContainer{
+    display: flex;
+}
+
+.canvasSquare{
+    width: 60px;
+    height: 60px;
+    border: 5px solid black;
+}
