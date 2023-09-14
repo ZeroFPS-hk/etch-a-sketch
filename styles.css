@@ -1,6 +1,10 @@
 .canvas{
     display: flex;
     flex-direction: column;
+    width: 960px;
+    height: 960px;
+    border: 10px solid red;
+    border-radius: 10px;
 }
 
 .rowContainer{
@@ -10,5 +14,10 @@
 .canvasSquare{
     width: 60px;
     height: 60px;
-    border: 5px solid black;
+    box-sizing: border-box;
+    border: 2px solid black;
+}
+
+.colored{
+    background-color: red;
 }
