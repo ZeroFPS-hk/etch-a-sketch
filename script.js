@@ -18,6 +18,8 @@ colorSelect.addEventListener("change", ()=>(currentColor = colorSelect.value));
 gridToggle.addEventListener("click", toggleGrid);
 canvasReset.addEventListener("click", resetCanvas);
 
+
+
 function createCanvas(size=16){
     size = checkSize(size);
     if(!size) return;
@@ -40,12 +42,17 @@ function createCanvasSquare(rowContainer, size){
     canvasSquare.style.height = `${canvas.clientHeight / size}px`;
     canvasSquare.classList.add("canvasSquare");
     if(gridEnabled) canvasSquare.classList.add("grid");
-    canvasSquare.addEventListener("mouseover", colorCanvasSquare);
+    canvasSquare.addEventListener("mouseover", colorOnHold);
+    canvasSquare.addEventListener("click", colorOnClick);
     rowContainer.appendChild(canvasSquare);
 }
 
-function colorCanvasSquare(e){
+function colorOnHold(e){
     if(mouseDown) e.target.style.background = currentColor;
+}
+
+function colorOnClick(e){
+    e.target.style.background = currentColor;
 }
 
 function checkSize(size){
@@ -73,6 +80,7 @@ function toggleGrid(){
     }
 }
 
+//for when you accidentally changed canvas size but want to reset canvas with current size
 function resetCanvas(){
     const canvasSquares = Array.from(document.querySelectorAll(".canvasSquare"));
     for(const canvasSquare of canvasSquares){
