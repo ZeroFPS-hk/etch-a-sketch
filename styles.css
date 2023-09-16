@@ -27,6 +27,9 @@ body{
 
 .canvasSquare{
     box-sizing: border-box;
+}
+
+.grid{
     border: 1px solid black;
 }
 

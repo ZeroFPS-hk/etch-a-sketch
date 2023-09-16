@@ -1,10 +1,22 @@
 const canvas = document.querySelector(".canvas");
+const sizeInput = document.querySelector("#sizeInput");
+const sizeButton = document.querySelector("#sizeButton");
+const colorSelect = document.querySelector("#colorSelect");
+const gridToggle = document.querySelector("#gridToggle");
+const canvasReset = document.querySelector("#canvasReset");
+
 let currentColor = "red";
 let mouseDown = false;
+let gridEnabled = true;
 
 window.onload = createCanvas(16);
 window.onmousedown = ()=> mouseDown = true;
 window.onmouseup = ()=> mouseDown = false;
+
+sizeButton.addEventListener("click", ()=>(createCanvas(sizeInput.value)));
+colorSelect.addEventListener("change", ()=>(currentColor = colorSelect.value));
+gridToggle.addEventListener("click", toggleGrid);
+canvasReset.addEventListener("click", resetCanvas);
 
 function createCanvas(size=16){
     size = checkSize(size);
@@ -27,6 +39,7 @@ function createCanvasSquare(rowContainer, size){
     canvasSquare.style.width = `${canvas.clientWidth / size}px`;
     canvasSquare.style.height = `${canvas.clientHeight / size}px`;
     canvasSquare.classList.add("canvasSquare");
+    if(gridEnabled) canvasSquare.classList.add("grid");
     canvasSquare.addEventListener("mouseover", colorCanvasSquare);
     rowContainer.appendChild(canvasSquare);
 }
@@ -48,4 +61,21 @@ function checkSize(size){
     }
 
     return size > 100? 100: size;
+}
+
+function toggleGrid(){
+    gridEnabled = !gridEnabled;
+    gridToggle.textContent = gridEnabled? "ON" : "OFF";
+    gridToggle.style.background = gridEnabled? "lime" : "pink";
+    const canvasSquares = Array.from(document.querySelectorAll(".canvasSquare"));
+    for(const canvasSquare of canvasSquares){
+        canvasSquare.classList.toggle("grid");
+    }
+}
+
+function resetCanvas(){
+    const canvasSquares = Array.from(document.querySelectorAll(".canvasSquare"));
+    for(const canvasSquare of canvasSquares){
+        canvasSquare.style.background = "white";
+    }
 }
