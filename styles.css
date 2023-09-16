@@ -2,14 +2,31 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: beige;
+    font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button{
+    border-radius: 5px;
+    padding: 4px 8px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+select{
+    width: 70px;
+    height: 22px;
 }
 
 .title{
-    font-size: 40px;
+    font-size: 60px;
+    color: purple;
+    font-weight: bold;
 }
 
 .instructions{
-    font-size: 20px;;
+    font-size: 28px;
+    text-align: center;
 }
 
 .canvas{
@@ -19,6 +36,8 @@ body{
     height: 960px;
     border: 10px solid red;
     border-radius: 10px;
+    background-color: white;
+    margin: 24px 0;
 }
 
 .rowContainer{
@@ -35,9 +54,26 @@ body{
 
 .controlsContainer{
     display: flex;
+    width: 960px;
+    gap: 20px;
+    justify-content: space-around;
+    font-size: 20px;
 }
 
 .smallContainer{
+    flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+#gridToggle{
+    background-color: lime;
+    margin-top: 0;
+}
+
+#canvasReset{
+    background-color: red;
+    color: white;
 }
