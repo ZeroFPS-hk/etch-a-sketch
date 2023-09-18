@@ -1,3 +1,6 @@
+const DEFAULT_CANVAS_SIZE = 16;
+const MAX_CANVAS_SIZE = 100;
+
 const canvas = document.querySelector(".canvas");
 const sizeInput = document.querySelector("#sizeInput");
 const sizeButton = document.querySelector("#sizeButton");
@@ -5,13 +8,15 @@ const colorSelect = document.querySelector("#colorSelect");
 const gridToggle = document.querySelector("#gridToggle");
 const canvasReset = document.querySelector("#canvasReset");
 
-let currentColor = "red";
+let currentColor = colorSelect.value;
 let mouseDown = false;
 let gridEnabled = true;
 
-window.onload = createCanvas(16);
+window.onload = ()=> createCanvas(DEFAULT_CANVAS_SIZE);
 window.onmousedown = ()=> mouseDown = true;
 window.onmouseup = ()=> mouseDown = false;
+//prevents dragging ability of browser which messes up with mouse down/up checks
+window.addEventListener("dragstart", (e)=>e.preventDefault());
 
 sizeButton.addEventListener("click", ()=>(createCanvas(sizeInput.value)));
 colorSelect.addEventListener("change", ()=>(currentColor = colorSelect.value));
@@ -20,8 +25,8 @@ canvasReset.addEventListener("click", resetCanvas);
 
 
 
-function createCanvas(size=16){
-    size = checkSize(size);
+function createCanvas(size=DEFAULT_CANVAS_SIZE){
+    size = validateSize(size);
     if(!size) return;
     canvas.replaceChildren();
     let rowContainer;
@@ -43,7 +48,7 @@ function createCanvasSquare(rowContainer, size){
     canvasSquare.classList.add("canvasSquare");
     if(gridEnabled) canvasSquare.classList.add("grid");
     canvasSquare.addEventListener("mouseover", colorOnHold);
-    canvasSquare.addEventListener("click", colorOnClick);
+    canvasSquare.addEventListener("mousedown", colorOnClick);
     rowContainer.appendChild(canvasSquare);
 }
 
@@ -51,11 +56,13 @@ function colorOnHold(e){
     if(mouseDown) e.target.style.background = currentColor;
 }
 
+//colorOnHold does not color first square clicked since mouse is already over the square before it clicks down.
+//So we need a seperate function.
 function colorOnClick(e){
     e.target.style.background = currentColor;
 }
 
-function checkSize(size){
+function validateSize(size){
     if(isNaN(size)){
         alert("Please enter a number.");
         return false;
@@ -67,7 +74,7 @@ function checkSize(size){
         return false;
     }
 
-    return size > 100? 100: size;
+    return size > MAX_CANVAS_SIZE? MAX_CANVAS_SIZE: size;
 }
 
 function toggleGrid(){
@@ -84,6 +91,6 @@ function toggleGrid(){
 function resetCanvas(){
     const canvasSquares = Array.from(document.querySelectorAll(".canvasSquare"));
     for(const canvasSquare of canvasSquares){
-        canvasSquare.style.background = "white";
+        canvasSquare.style.background = canvas.style.backgroundColor;
     }
 }
